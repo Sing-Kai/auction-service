@@ -3,6 +3,9 @@ const commonMiddleware = require('../lib/commonMiddleware');
 const createError = require('http-errors')
 const { getAuctionById } = require('./getAuction')
 const dynamodb = new AWS.DynamoDB.DocumentClient();
+const validator = require('@middy/validator')
+const {transpileSchema} = require('@middy/validator/transpile')
+const placeBidSchema = require('../lib/schemas/placeBidSchema')
 
 async function placeBid(event, context) {
 
@@ -10,6 +13,10 @@ async function placeBid(event, context) {
   const { amount } = event.body;
 
   const auction = await getAuctionById(id);
+
+  if(auction.status !== 'OPEN'){
+    throw new createError.Forbidden(`You can not bid on a closed auction`);
+  }
 
   if (amount <= auction.highestBid.amount){
     throw new createError.Forbidden(`Your bid must be higher than ${auction.highestBid.amount}`);
@@ -42,5 +49,12 @@ async function placeBid(event, context) {
   };
 }
 
-exports.handler = commonMiddleware(placeBid)
+exports.handler = commonMiddleware(placeBid).use(
+  validator({
+    eventSchema: transpileSchema(placeBidSchema),
+    ajvOptions: {
+      strict: false,
+    },
+  })
+);
 
