@@ -4,7 +4,7 @@ const createError = require('http-errors')
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-exports.getAuctionById = async (id) => {
+const getAuctionById = async (id) => {
 
   let auction;
 
@@ -43,4 +43,5 @@ async function getAuction(event, context) {
 }
 
 exports.handler = commonMiddleware(getAuction)
+exports.getAuctionById = getAuctionById;
 
