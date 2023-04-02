@@ -32,6 +32,7 @@ functions:
       - http:
           method: POST
           path: /auction
+          cors: true
           authorizer: arn:aws:lambda:eu-west-1:394226462971:function:auth-service-dev-auth
 
   getAuctions:
@@ -40,6 +41,7 @@ functions:
       - http:
           method: GET
           path: /auctions 
+          cors: true
           authorizer: arn:aws:lambda:eu-west-1:394226462971:function:auth-service-dev-auth    
 
   getAuction:
@@ -47,7 +49,8 @@ functions:
     events:
       - http:
           method: GET
-          path: /auction/{id}   
+          path: /auction/{id}  
+          cors: true 
           authorizer: arn:aws:lambda:eu-west-1:394226462971:function:auth-service-dev-auth
 
   placeBid:
@@ -56,6 +59,7 @@ functions:
       - http:
           method: PATCH
           path: /auction/{id}/bid 
+          cors: true
           authorizer: arn:aws:lambda:eu-west-1:394226462971:function:auth-service-dev-auth
 
   uploadAuctionPicture:
@@ -64,6 +68,7 @@ functions:
       - http:
           method: PATCH
           path: auction/{id}/picture
+          cors: true
           authorizer: arn:aws:lambda:eu-west-1:394226462971:function:auth-service-dev-auth
 
   processAuctions:
