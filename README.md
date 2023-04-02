@@ -1,17 +1,25 @@
-# Codingly.io: Base Serverless Framework Template
+## Auction Service
 
-https://codingly.io
+5 Lambda requests come from API Gateway, public gate that triggers endpoints like traditional Rest API. All of which get authorized before getting executed:
+- createAuction: creates an auction
+- getAuctions: gets auctions based on status with queryParams
+- getAuction: gets auctin by the auction id
+- placeBid: users place a bid on the auction 
+- updateAuctionPicture: updated to S3 for storage
 
-## What's included
-* Folder structure used consistently across our projects.
-* [serverless-pseudo-parameters plugin](https://www.npmjs.com/package/serverless-pseudo-parameters): Allows you to take advantage of CloudFormation Pseudo Parameters.
-* [serverless-bundle plugin](https://www.npmjs.com/package/serverless-pseudo-parameters): Bundler based on the serverless-webpack plugin - requires zero configuration and fully compatible with ES6/ES7 features.
+Final Lambda: ProcessAuction is triggered by AWS 
+- checks whether the time is up with the auction 
+- closes the auction 
+- emails the seller and bidder if they are successful or not
 
 ## Getting started
+
+install npm packages
 ```
-sls create --name YOUR_PROJECT_NAME --template-url https://github.com/codingly-io/sls-base
-cd YOUR_PROJECT_NAME
 npm install
 ```
 
-You are ready to go!
+deploy to AWS
+```
+serverless deploy
+```
