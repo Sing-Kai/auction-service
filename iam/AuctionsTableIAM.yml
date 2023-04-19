@@ -8,5 +8,4 @@ AuctionsTableIAM:
     - dynamodb:Query
   Resource:
     - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/AuctionsTable
-    # - !Join ['/', '!Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/AuctionsTable', 'index', 'statusAndEndDate']
     - !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/AuctionsTable/index/statusAndEndDate
